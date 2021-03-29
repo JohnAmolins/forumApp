@@ -9,7 +9,10 @@
         # secondly - call a model function
         public function index(){            // method 'index'; need to have an index method as 'default' if no other methods are present
             
-            $data = ['title'=> 'Welcome to ForumApp'];          
+            $data = ['title'=> 'Welcome to ForumApp',
+            
+            ];
+
             
             
         # pass data into a view
@@ -17,8 +20,10 @@
         }
 
         public function about(){ // method 'about'
-            $data = ['title'=> 'About Us'];          // pass data into View
-            $this->view('about/index', $data);
+            $data = ['title'=> 'About Us',
+            'description' => 'This is a simple forum application for blog posts'
+        ];          // pass data into View
+            $this->view('pages/about', $data);
            
    
         }      

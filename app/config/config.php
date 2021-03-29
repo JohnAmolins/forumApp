@@ -11,4 +11,4 @@ define('APPROOT', dirname(dirname(__FILE__)));
 # root for the URL
 define('URLROOT', 'https://localhost/forumApp');
 
-define('SITENME', 'ForumApp');
+define('SITENAME', 'ForumApp');
