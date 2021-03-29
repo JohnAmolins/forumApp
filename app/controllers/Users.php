@@ -23,6 +23,20 @@
             }
         }
 
+        # login 
+        public function login(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){ // check if incoming method is 'POST' METHOD
 
+            } else{ // load 'blak' register form if it's not 'POST' request; save data if user has entered any data
+                $data = [
+                    'email' =>'',
+                    'password' => '',
+                    'email_error' => '',
+                    'password_error' => '',
+                ];
+
+                $this->view('users/login', $data);
+            }
+        }
 
     }
