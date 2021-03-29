@@ -8,7 +8,6 @@ class Core{
     protected $param =[];            // if no other parameter is called -> loads empty array
 
     public function __construct(){          // when Core class object is instantiated -> calls constructor and first method -> to get url
-        //print_r($this->fetchUrl());
         $url = $this->fetchUrl();
         if(file_exists('../app/controllers/' . ucwords($url[0]) . '.php')){      // checks from URL /controller/ if it exists in controllers folder
             $this->controller = ucwords($url[0]);            // sets controller to current
@@ -21,7 +20,7 @@ class Core{
         
 
 
-        if(isset($url[1])){         // checks if method is set; method is second(1) 'part' in URL structure array
+        if(isset($url[1])){         // checks if method is set; method is adrresed as second or (1) 'part' in URL structure array
             if(method_exists($this->controller, $url[1])){
                 $this->method = $url[1];
                 unset($url[1]);
