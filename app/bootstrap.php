@@ -1,5 +1,11 @@
 <?php
+# load config file
 require_once 'config/config.php';
+
+# load helper files
+require_once 'helpers/url_helper.php';
+
+
 
 # manual list libraries
 //require_once 'libs/Controller.php';

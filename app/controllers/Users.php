@@ -1,6 +1,8 @@
 <?php
     class Users extends Controller{
         public function __construct(){
+            # load the user model
+            $this->userModel = $this->model('User');
 
         }
         # to register new users - loads register form, submits register form
@@ -19,29 +21,46 @@
                     'confirm_password_error' => ''
                 ];
 
-
-                if(empty($data['email'])){ // if subbmited emailis empty
+                # validate email
+                if(empty($data['email'])){ 
                     $data['email_error'] = 'Please enter email';
+                } else {
+                    if($this->userModel->findUserByEmail($data['email'])){
+                        $data['email_error'] = 'Email is already taken';
+                    }
                 }
+                # validate name
                 if(empty($data['name'])){ // 
                     $data['name_error'] = 'Please enter valid name';
                 }
+                # validate password
                 if(empty($data['password'])){ 
                     $data['password_error'] = 'Please enter password';
                 }elseif(strlen($data['password'])<6){
                     $data['password_error'] = 'Password too short. Must be 6 characters.';
                 }
+                # confirm password
                 if(empty($data['confirm_password'])){ 
                     $data['confirm_password_error'] = 'Please confirm password!';
                 }else{
-                    if($data['password'] != ['confirm_password']){
+                    if($data['password'] != $data['confirm_password']){
                         $data['confirm_password_error'] = 'Passwords do not match.';
                     }
                 }
 
                 # check if error variables are empty
                 if(empty($data['email_error']) && empty($data['name_error']) && empty($data['password_error'])  && empty($data['confirm_password_error'])){
-                    die('Success!');
+
+                # Hash the password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                #call Model method - 'register' from User models
+                if($this->userModel->register($data)){
+                    redirect('users/login');
+                }else{
+                    die('Something went wrong');
+                }
+
                 } else {
                     # load view with errors
                     $this->view('users/register', $data);
@@ -83,7 +102,7 @@
                     $data['email_error'] = 'Please enter email';
                 }
 
-                if(empty($data['password'])){ // if subbmited emailis empty
+                if(empty($data['password'])){ 
                     $data['password_error'] = 'Please enter password';
                 }
 
@@ -96,7 +115,7 @@
                     $this->view('users/login', $data);
                 }
 
-            } else{ // load 'blak' register form if it's not 'POST' request; save data if user has entered any data
+            } else{ // load 'blank' register form if it's not 'POST' request; save data if user has entered any data
                 $data = [
                     'email' =>'',
                     'password' => '',

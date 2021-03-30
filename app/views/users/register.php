@@ -42,3 +42,5 @@
 
 
 <?php require APPROOT . '/views/template/footer.php'; ?>
+
+
